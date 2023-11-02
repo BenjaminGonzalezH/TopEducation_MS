@@ -1,13 +1,13 @@
-package TopEducation.m1;
+package TopEducation.m2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BackendEstudiantesServiceApplication {
+public class M2Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BackendEstudiantesServiceApplication.class, args);
+		SpringApplication.run(M2Application.class, args);
 	}
 
 }

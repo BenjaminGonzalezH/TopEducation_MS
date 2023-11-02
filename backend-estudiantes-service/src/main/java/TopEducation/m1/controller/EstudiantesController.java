@@ -31,6 +31,15 @@ public class EstudiantesController {
         return ResponseEntity.ok(estudiante);
     }
 
+    @GetMapping("/ByRut/{rut}")
+    public ResponseEntity<EstudiantesEntity> getByRut(@PathVariable("rut") String rut) {
+        EstudiantesEntity estudiante = estudiantesService.BuscarPorRut(rut);
+        if(estudiante == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(estudiante);
+    }
+
     @PostMapping()
     public ResponseEntity<EstudiantesEntity> save(@RequestBody EstudiantesEntity estudiante) {
         EstudiantesEntity estudianteNew = estudiantesService.guardarEstudiantes(estudiante);

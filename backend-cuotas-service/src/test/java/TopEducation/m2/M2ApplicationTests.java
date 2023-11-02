@@ -1,10 +1,10 @@
-package TopEducation.m1;
+package TopEducation.m2;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackendEstudiantesServiceApplicationTests {
+class M2ApplicationTests {
 
 	@Test
 	void contextLoads() {

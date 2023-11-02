@@ -23,4 +23,9 @@ public class EstudiantesService {
     public ArrayList<EstudiantesEntity> BuscarTodosEstudiantes(){
         return (ArrayList<EstudiantesEntity>) EstudiantesRepository.findAll();
     }
+
+    public EstudiantesEntity BuscarPorRut(String Rut){
+        EstudiantesEntity estudiante = EstudiantesRepository.findByRut(Rut);
+        return estudiante;
+    }
 }

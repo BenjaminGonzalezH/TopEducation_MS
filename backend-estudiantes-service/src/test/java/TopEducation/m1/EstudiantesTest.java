@@ -154,4 +154,31 @@ public class EstudiantesTest {
         /*Comparar resultados*/
         assertEquals(resultado1.getId_estudiante(),resultado2.getId_estudiante());
     }
+
+    @Test
+    void ObtenerPorRut() {
+        /*Elementos Internos*/
+        EstudiantesEntity estudiante;   //Estudiante de prueba.
+        EstudiantesEntity resultado1;    //Resultado de la función de guardado.
+        EstudiantesEntity resultado2;    //Resultado de la función de guardado.
+
+        /*Modelo de estudiante usual que se guarda en la BD*/
+        estudiante = new EstudiantesEntity(); //Creación.
+        //Id de entidad actualizable de forma automatica
+        estudiante.setRut("20.453.333-k");
+        estudiante.setApellidos("Ramirez Baeza");
+        estudiante.setNombres("Elvio Camba");
+        estudiante.setFecha_nac(new Date());
+        estudiante.setTipo_cole("Privado");
+        estudiante.setNom_cole("Weston Academy");
+        estudiante.setAnio_egre(4);
+
+        /*Guardado en la base de datos*/
+        resultado1 = estudiantesService.guardarEstudiantes(estudiante);
+        resultado2 = estudiantesService.BuscarPorRut(resultado1.getRut());
+        estudiantesRepository.delete(estudiante);
+
+        /*Comparar resultados*/
+        assertEquals(resultado1.getId_estudiante(),resultado2.getId_estudiante());
+    }
 }
