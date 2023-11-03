@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.ByteArrayOutputStream;
@@ -69,15 +70,20 @@ public class ReportesService {
             DescuentoPorPruebas = "0%";
             descuentoPuntaje = 0.0F;
 
-            //Obtención de listas de cuotas y pruebas por rut de estudiante.
-            ParameterizedTypeReference<ArrayList<CuotasModel>> responseType1 = new ParameterizedTypeReference<ArrayList<CuotasModel>>() {};
-            ResponseEntity<ArrayList<CuotasModel>> responseEntity1 = restTemplate.exchange(
-                    "http://localhost:8005/Cuotas/" +
-                            RutEstudiante,
-                    HttpMethod.GET,
-                    null,
-                    responseType1);
-            AuxCuotasEstudiantes = responseEntity1.getBody();
+            try {
+                //Obtención de listas de cuotas y pruebas por rut de estudiante.
+                ParameterizedTypeReference<ArrayList<CuotasModel>> responseType1 = new ParameterizedTypeReference<ArrayList<CuotasModel>>() {
+                };
+                ResponseEntity<ArrayList<CuotasModel>> responseEntity1 = restTemplate.exchange(
+                        "http://localhost:8005/Cuotas/" +
+                                RutEstudiante,
+                        HttpMethod.GET,
+                        null,
+                        responseType1);
+                AuxCuotasEstudiantes = responseEntity1.getBody();
+            }catch (HttpClientErrorException ex) {
+                AuxCuotasEstudiantes = new ArrayList<>();
+            }
             AuxPruebasEstudiantes = pruebaService.ObtenerPruebasPorRutEstudiante(RutEstudiante);
 
             if(AuxCuotasEstudiantes.size() > 1) {
@@ -197,8 +203,13 @@ public class ReportesService {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         /*Se buscan a todos los estudiantes*/
-        Estudiantes = restTemplate.getForObject("http://localhost:8001/student",
-                ArrayList.class);
+        ParameterizedTypeReference<ArrayList<EstudiantesModel>> responseType = new ParameterizedTypeReference<ArrayList<EstudiantesModel>>() {};
+        ResponseEntity<ArrayList<EstudiantesModel>> responseEntity = restTemplate.exchange(
+                "http://localhost:8001/student",
+                HttpMethod.GET,
+                null,
+                responseType);
+        Estudiantes = responseEntity.getBody();
 
         while(i < Estudiantes.size()){
             //Se saca Rut de estudiante en posición i.
@@ -214,8 +225,20 @@ public class ReportesService {
             MontoPorPagar = "";
 
             /*Cuotas y pruebas del estudiante*/
-            AuxCuotasEstudiantes = restTemplate.getForObject("http://localhost:8005/Cuotas/" + RutEstudiante,
-                    ArrayList.class);
+            try {
+                //Obtención de listas de cuotas y pruebas por rut de estudiante.
+                ParameterizedTypeReference<ArrayList<CuotasModel>> responseType1 = new ParameterizedTypeReference<ArrayList<CuotasModel>>() {
+                };
+                ResponseEntity<ArrayList<CuotasModel>> responseEntity1 = restTemplate.exchange(
+                        "http://localhost:8005/Cuotas/" +
+                                RutEstudiante,
+                        HttpMethod.GET,
+                        null,
+                        responseType1);
+                AuxCuotasEstudiantes = responseEntity1.getBody();
+            }catch (HttpClientErrorException ex) {
+                AuxCuotasEstudiantes = new ArrayList<>();
+            }
             AuxPruebasEstudiantes = pruebaService.ObtenerPruebasPorRutEstudiante(RutEstudiante);
 
             /*Nombre de estudiante*/

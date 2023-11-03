@@ -11,6 +11,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -153,38 +154,43 @@ public class PruebaService {
 
     @Generated
     public void GuardarPruebaEnBD(String Rut_Estudiante, String Puntaje, String Fecha_Realizacion) {
-        /*Entidad a Guardar*/
+        /* Entidad a Guardar */
         PruebaEntity Prueba = new PruebaEntity();
         EstudiantesModel Estudiante;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-        /*Se busca estudiante*/
-        Estudiante = restTemplate.getForObject("http://localhost:8001/student/ByRut/" + Rut_Estudiante,
-                EstudiantesModel.class);
+        try {
+            /* Se busca el estudiante */
+            Estudiante = restTemplate.getForObject("http://localhost:8001/student/ByRut/" + Rut_Estudiante,
+                    EstudiantesModel.class);
 
-        /*Caso de que estudiante no exista se detiene proceso*/
-        if (Estudiante == null) {
-            return;
-        }
+            /* Caso en que el estudiante no existe */
+            if (Estudiante == null) {
+                // Maneja el caso en que el estudiante no existe, por ejemplo, lanzando una excepción o registrando un error.
+                // Puedes agregar tu lógica de manejo de errores aquí.
+                return;
+            }
 
-        /*Inicialización*/
-        Prueba.setId_estudiante(Estudiante.getId_estudiante());
-        /*Caso en que no haya registro de puntaje*/
-        if(Objects.equals(Puntaje, "")){
-            Prueba.setPuntaje(150);
-        }
-        /*Caso de puntaje que sobrepasa los valores de la PAES*/
-        else if(Integer.parseInt(Puntaje) < 150 || Integer.parseInt(Puntaje) > 1000){
-            Prueba.setPuntaje(150);
-        }
-        else {
-            Prueba.setPuntaje(Integer.parseInt(Puntaje));
-        }
-        Prueba.setFecha_reali(LocalDate.parse(Fecha_Realizacion,formatter));
-        Prueba.setFecha_resul(LocalDate.now());
+            /* Inicialización */
+            Prueba.setId_estudiante(Estudiante.getId_estudiante());
 
-        /*Se guarda Entidad de Prueba*/
-        pruebaRepository.save(Prueba);
+            /* Caso en que no haya registro de puntaje o puntaje fuera de rango */
+            if (Puntaje == null || Puntaje.isEmpty() || Integer.parseInt(Puntaje) < 150 || Integer.parseInt(Puntaje) > 1000) {
+                Prueba.setPuntaje(150);
+            } else {
+                Prueba.setPuntaje(Integer.parseInt(Puntaje));
+            }
+
+            Prueba.setFecha_reali(LocalDate.parse(Fecha_Realizacion, formatter));
+            Prueba.setFecha_resul(LocalDate.now());
+
+            /* Se guarda la Entidad de Prueba */
+            pruebaRepository.save(Prueba);
+        } catch (HttpClientErrorException ex) {
+            //No se requiere hacer nada.
+        } catch (Exception ex) {
+            //No se requiere hacer nada.
+        }
     }
 
     public ArrayList<PruebaEntity> ObtenerPruebasPorRutEstudiante(String Rut) {

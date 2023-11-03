@@ -34,7 +34,7 @@ public class PruebaController {
         }
         else {
             pruebaService.LeerArchivoCsv("Pruebas.csv");
-            return "Archivo Subido exitosamente";
+            return "Archivo cargado exitosamente";
         }
     }
 }
