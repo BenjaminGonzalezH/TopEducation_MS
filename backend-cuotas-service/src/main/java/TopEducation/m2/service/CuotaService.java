@@ -3,6 +3,7 @@ package TopEducation.m2.service;
 import TopEducation.m2.entity.CuotaEntity;
 import TopEducation.m2.model.EstudiantesModel;
 import TopEducation.m2.repository.CuotaRepository;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -190,5 +191,10 @@ public class CuotaService {
 
     public ArrayList<CuotaEntity> ObtenerTodas(){
         return (ArrayList<CuotaEntity>) cuotaRepository.findAll();
+    }
+
+    @Generated
+    public ArrayList<CuotaEntity> ActualizarCuotas(ArrayList<CuotaEntity> Cuotas){
+        return (ArrayList<CuotaEntity>) cuotaRepository.saveAll(Cuotas);
     }
 }

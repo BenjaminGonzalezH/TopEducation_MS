@@ -87,4 +87,8 @@ public class CuotaController {
 
         return ResponseEntity.ok(cuotas);
     }
+    @PutMapping("/Actualizar")
+    public void actualizarCuotas(@RequestBody ArrayList<CuotaEntity> cuotas) {
+        cuotaService.ActualizarCuotas(cuotas);
+    }
 }
