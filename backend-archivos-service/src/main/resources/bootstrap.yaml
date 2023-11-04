@@ -1,0 +1,23 @@
+spring:
+  devtools:
+    restart:
+      aditional-paths: src/main/java
+  application:
+    name: backend-archivos-service
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  datasource:
+    plataform: postgres
+    driver-class-name: org.postgresql.Driver
+    dbname: Pruebas
+    url: jdbc:postgresql://localhost:5432/Pruebas
+    username: postgres
+    password: postre
+    data: classpath:PruebasData.sql
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8081

@@ -21,7 +21,7 @@ public class CuotaService {
 
     public ArrayList<CuotaEntity> ObtenerCuotasPorRutEstudiante(String Rut) {
         /*Busqueda de ID de estudiante*/
-        EstudiantesModel estudiante = restTemplate.getForObject("http://localhost:8001/student/ByRut/" + Rut,
+        EstudiantesModel estudiante = restTemplate.getForObject("http://localhost:8080/student/ByRut/" + Rut,
                 EstudiantesModel.class);
 
         /*Se verifica que el estudiante exista*/
@@ -78,7 +78,7 @@ public class CuotaService {
         float ArancelReal;
 
         /* Se busca usuario para generar cuotas */
-        estudiante = restTemplate.getForObject("http://localhost:8001/student/ByRut/" + Rut,
+        estudiante = restTemplate.getForObject("http://localhost:8080/student/ByRut/" + Rut,
                 EstudiantesModel.class);
 
         /*Control de entrada*/

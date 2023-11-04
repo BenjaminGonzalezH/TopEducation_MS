@@ -161,7 +161,7 @@ public class PruebaService {
 
         try {
             /* Se busca el estudiante */
-            Estudiante = restTemplate.getForObject("http://localhost:8001/student/ByRut/" + Rut_Estudiante,
+            Estudiante = restTemplate.getForObject("http://localhost:8080/student/ByRut/" + Rut_Estudiante,
                     EstudiantesModel.class);
 
             /* Caso en que el estudiante no existe */
@@ -195,7 +195,7 @@ public class PruebaService {
 
     public ArrayList<PruebaEntity> ObtenerPruebasPorRutEstudiante(String Rut) {
         /*Busqueda de ID de estudiante*/
-        EstudiantesModel estudiante = restTemplate.getForObject("http://localhost:8001/student/ByRut/" + Rut,
+        EstudiantesModel estudiante = restTemplate.getForObject("http://localhost:8080/student/ByRut/" + Rut,
                 EstudiantesModel.class);
 
         /*Se verifica que el estudiante exista*/

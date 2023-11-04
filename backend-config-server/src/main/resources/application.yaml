@@ -1,0 +1,12 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: backend-config-server
+  cloud:
+    config:
+      server:
+        git:
+          default-label: master
+          uri: https://github.com/BenjaminGonzalezH/TopEducation_MS
+          search-paths: "config-data"
