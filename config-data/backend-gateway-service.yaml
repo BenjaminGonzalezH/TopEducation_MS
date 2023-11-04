@@ -38,4 +38,3 @@ spring:
           uri: lb://backend-archivos-service
           predicates:
             - Path=/Pruebas/**
-            - Path=/Reportes/**
