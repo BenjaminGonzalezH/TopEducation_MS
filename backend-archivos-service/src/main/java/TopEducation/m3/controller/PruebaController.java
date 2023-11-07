@@ -25,16 +25,16 @@ public class PruebaController {
     }
 
     @PostMapping("/Upload")
-    public String upload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
 
         pruebaService.GuardarNombreArchivo(file);
         String mensaje = pruebaService.VerificarArchivo("Pruebas.csv");
         if(!mensaje.equals("")) {
-            return mensaje;
+            return ResponseEntity.ok(mensaje);
         }
         else {
             pruebaService.LeerArchivoCsv("Pruebas.csv");
-            return "Archivo cargado exitosamente";
+            return ResponseEntity.ok("Archivo cargado exitosamente");
         }
     }
 }
