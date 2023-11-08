@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import '../App.css';
-import CuotasService from '../services/ArchivosService';
+import ArchivosService from '../services/ArchivosService';
 
 
 function ObtenerArancelesComponent() {
     const handleDownloadFileAranceles = async () => {
       try {
-        const response = await CuotasService.GenerarPlanillaAranceles();
+        const response = await ArchivosService.GenerarPlanillaAranceles();
         const fileUrl = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
         link.href = fileUrl;
