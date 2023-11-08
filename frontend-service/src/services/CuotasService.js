@@ -16,8 +16,14 @@ class CuotasService {
         return axios.post(CUOTAS_API_URL + "Pay/" + id);
     }
 
-    SaveCuotas(){
-        return axios.post(CUOTAS_API_URL + "GuardarCuotas");
+    SaveCuotas(rut, tipoPago, cantidadCuotas) {
+        return axios.post(`${CUOTAS_API_URL}/GuardarCuotas`, null, {
+          params: {
+            rut: rut,
+            tipo_pago: tipoPago,
+            cant_cuotas: cantidadCuotas
+          }
+        });
     }
 }
 
