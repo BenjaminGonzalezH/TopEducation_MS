@@ -34,7 +34,7 @@ public class CuotaController {
             return ResponseEntity.notFound().build();
         }
         else if(cuotas.get(0).getMeses_atra() == -1){
-            return ResponseEntity.ok(cuotas);
+            return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok(cuotas);
@@ -56,7 +56,7 @@ public class CuotaController {
     }
 
     @PostMapping("/GuardarCuotas")
-    public ResponseEntity<ArrayList<CuotaEntity>> GenerarCuotas(@RequestParam("rut") String rut,
+    public ResponseEntity<String> GenerarCuotas(@RequestParam("rut") String rut,
                                 @RequestParam("cant_cuotas") Integer cantCuotas,
                                 @RequestParam("tipo_pago") String TipoPago) {
         /*Cuota de error*/
@@ -67,25 +67,28 @@ public class CuotaController {
 
         /*Mensajes de error*/
         if(cuotas.get(0).getMeses_atra() == -1){
-            return ResponseEntity.ok(cuotas);
+            return ResponseEntity.ok("Pago al contado es unico");
         }
         else if(cuotas.get(0).getMeses_atra() == -2){
-            return ResponseEntity.ok(cuotas);
+            return ResponseEntity.ok("Ya hay cuotas asociadas al rut");
         }
         else if(cuotas.get(0).getMeses_atra() == -3){
-            return ResponseEntity.ok(cuotas);
+            return ResponseEntity.ok("Un alumno de un colegio municipal solo " +
+                    "opta a máximo 10 cuotas");
         }
         else if(cuotas.get(0).getMeses_atra() == -4){
-            return ResponseEntity.ok(cuotas);
+            return ResponseEntity.ok("Un alumno de un colegio subvencionado solo " +
+                    "opta a máximo 7 cuotas");
         }
         else if(cuotas.get(0).getMeses_atra() == -5){
-            return ResponseEntity.ok(cuotas);
+            return ResponseEntity.ok("Un alumno de un colegio privado solo " +
+                    "opta a máximo 4 cuotas");
         }
         else if(cuotas.get(0).getMeses_atra() == -6){
-            return ResponseEntity.ok(cuotas);
+            return ResponseEntity.ok("Rut dado no esta registrado");
         }
 
-        return ResponseEntity.ok(cuotas);
+        return ResponseEntity.ok("Cuotas generadas satisfactoriamente.");
     }
     @PutMapping("/Actualizar")
     public void actualizarCuotas(@RequestBody ArrayList<CuotaEntity> cuotas) {
