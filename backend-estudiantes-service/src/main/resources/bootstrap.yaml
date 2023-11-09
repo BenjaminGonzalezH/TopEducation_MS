@@ -13,7 +13,7 @@ spring:
     plataform: postgres
     driver-class-name: org.postgresql.Driver
     dbname: Estudiantes
-    url: jdbc:postgresql://localhost:5432/Estudiantes
+    url: jdbc:postgresql://localhost:5432/estudiantes
     username: postgres
     password: postre
     data: classpath:EstudiantesData.sql

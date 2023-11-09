@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>TopEducation</groupId>
-	<artifactId>backend-config-server</artifactId>
+	<artifactId>config-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>backend-config-server</name>
 	<description>Demo project for Spring Boot</description>

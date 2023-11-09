@@ -1,0 +1,43 @@
+--Docker.
+
+cd backend-config-server
+mvnw clean install -DskipTests=True
+docker build -t benjamingonzalezh/topeducation-config-postgres .
+docker push benjamingonzalezh/topeducation-config-postgres
+cd ../
+
+cd backend-eureka-service
+mvnw clean install -DskipTests=True
+docker build -t benjamingonzalezh/topeducation-eureka-postgres .
+docker push benjamingonzalezh/topeducation-eureka-postgres
+cd ../
+
+cd backend-gateway-service
+mvnw clean install -DskipTests=True
+docker build -t benjamingonzalezh/topeducation-gateway-postgres .
+docker push benjamingonzalezh/topeducation-gateway-postgres
+cd ../
+
+cd backend-estudiantes-service
+mvnw clean install -DskipTests=True
+docker build -t benjamingonzalezh/topeducation-estudiantes-postgres .
+docker push benjamingonzalezh/topeducation-estudiantes-postgres
+cd ../
+
+cd backend-cuotas-service
+mvnw clean install -DskipTests=True
+docker build -t benjamingonzalezh/topeducation-cuotas-postgres .
+docker push benjamingonzalezh/topeducation-cuotas-postgres
+cd ../
+
+cd backend-archivos-service
+mvnw clean install -DskipTests=True
+docker build -t benjamingonzalezh/topeducation-archivos-postgres .
+docker push benjamingonzalezh/topeducation-archivos-postgres
+cd ../
+
+cd frontend-service
+docker build -t benjamingonzalezh/topeducation-frontend-postgres .
+docker push benjamingonzalezh/topeducation-frontend-postgres
+cd ../
+
