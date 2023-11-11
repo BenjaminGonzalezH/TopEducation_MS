@@ -60,3 +60,15 @@ kubectl apply -f backend-eureka-deployment-service.yml
 kubectl apply -f backend-estudiantes-deployment-service.yml
 kubectl apply -f backend-cuotas-deployment-service.yml
 kubectl apply -f backend-gateway-deployment-service.yml
+
+kubectl get pods
+kubectl get services
+kubectl get deployments
+kubectl get persistentvolumeclaims
+kubectl get persistentvolume
+kubectl get configmaps
+kubectl get secrets
+
+kubectl get all
+
+kubectl logs <Name pods> -f
