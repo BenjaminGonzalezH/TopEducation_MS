@@ -10,8 +10,7 @@ spec:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: "/Users/Benjamin Gonzalez/docker/postgres/docker-pg-vol/data"
+  emptyDir: {}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

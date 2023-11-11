@@ -41,3 +41,22 @@ docker build -t benjamingonzalezh/topeducation-frontend-postgres .
 docker push benjamingonzalezh/topeducation-frontend-postgres
 cd ../
 
+--Minikube
+
+minikube start
+minikube status
+
+cd Minikube
+
+kubectl apply -f postgres-secrets.yml
+kubectl apply -f postgres-configmap.yml
+kubectl apply -f postgres-dp-sv-pvc.yml
+
+kubectl apply -f frontend-deployment-service.yml
+kubectl apply -f backend-config-deployment-service.yml
+
+kubectl apply -f backend-eureka-deployment-service.yml
+
+kubectl apply -f backend-estudiantes-deployment-service.yml
+kubectl apply -f backend-cuotas-deployment-service.yml
+kubectl apply -f backend-gateway-deployment-service.yml
