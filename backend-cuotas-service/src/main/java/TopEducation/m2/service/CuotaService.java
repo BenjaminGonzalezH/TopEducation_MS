@@ -25,7 +25,7 @@ public class CuotaService {
     public ArrayList<CuotaEntity> ObtenerCuotasPorRutEstudiante(String Rut) {
         /* Búsqueda de ID de estudiante */
         ResponseEntity<EstudiantesModel> responseEntity = restTemplate.exchange(
-                "http://localhost:8080/student/ByRut/" + Rut,
+                "http://backend-estudiantes-service/student/ByRut/" + Rut,
                 HttpMethod.GET,
                 null,
                 EstudiantesModel.class
