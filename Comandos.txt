@@ -59,6 +59,7 @@ kubectl apply -f backend-eureka-deployment-service.yml
 
 kubectl apply -f backend-estudiantes-deployment-service.yml
 kubectl apply -f backend-cuotas-deployment-service.yml
+kubectl apply -f backend-archivos-deployment-service.yml
 kubectl apply -f backend-gateway-deployment-service.yml
 
 kubectl get pods
@@ -74,3 +75,41 @@ kubectl get all
 kubectl logs <Name pods> -f
 
 kubectl exec -it <Name pods postgres> bash -- psql -h postgres -U postgres
+
+--Ejecutar aplicación
+
+minikube service frontend-service
+minikube tunnel
+
+
+--Borrar minikube
+
+kubectl delete deployments frontend-deployment
+kubectl delete services frontend-service
+
+kubectl delete deployments postgres
+kubectl delete services postgres
+kubectl delete PersistentVolumeClaims postgres-persistent-volume-claim
+kubectl delete PersistentVolumes postgres-persistent-volume-claim
+
+kubectl delete ConfigMap postgres-config-map
+
+kubectl delete Secret postgres-credentials
+
+kubectl delete deployments backend-config-deployment
+kubectl delete services backend-config-service
+
+kubectl delete deployments backend-eureka-deployment
+kubectl delete services backend-eureka-service
+
+kubectl delete deployments backend-gateway-deployment
+kubectl delete services backend-gateway-service
+
+kubectl delete deployments backend-estudiantes-deployment
+kubectl delete services backend-estudiantes-service
+
+kubectl delete deployments backend-cuotas-deployment
+kubectl delete services backend-cuotas-service
+
+kubectl delete deployments backend-archivos-deployment
+kubectl delete services backend-archivos-service

@@ -5,6 +5,9 @@ import TopEducation.m2.model.EstudiantesModel;
 import TopEducation.m2.repository.CuotaRepository;
 import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,23 +23,26 @@ public class CuotaService {
     RestTemplate restTemplate;
 
     public ArrayList<CuotaEntity> ObtenerCuotasPorRutEstudiante(String Rut) {
-        /*Busqueda de ID de estudiante*/
-        EstudiantesModel estudiante = restTemplate.getForObject("http://localhost:8080/student/ByRut/" + Rut,
-                EstudiantesModel.class);
+        /* Búsqueda de ID de estudiante */
+        ResponseEntity<EstudiantesModel> responseEntity = restTemplate.exchange(
+                "http://backend-estudiantes-service/student/ByRut/" + Rut,
+                HttpMethod.GET,
+                null,
+                EstudiantesModel.class
+        );
 
-        /*Se verifica que el estudiante exista*/
-        if(estudiante == null){
-            /*Se crea estructura con 1 elemento*/
+        /* Se verifica que el estudiante exista */
+        if (responseEntity.getStatusCode() != HttpStatus.OK || responseEntity.getBody() == null) {
+            /* Se crea estructura con 1 elemento */
             ArrayList<CuotaEntity> listafinal = new ArrayList<CuotaEntity>();
             CuotaEntity cuotaEntity = new CuotaEntity();
             cuotaEntity.setMeses_atra(-1);
             listafinal.add(cuotaEntity);
 
             return listafinal;
-        }
-        else {
-            /*Busqueda de conjunto de cuotas por por id estudiante*/
-            return cuotaRepository.findAllByEstudianteId(estudiante.getId_estudiante());
+        } else {
+            /* Búsqueda de conjunto de cuotas por ID estudiante */
+            return cuotaRepository.findAllByEstudianteId(responseEntity.getBody().getId_estudiante());
         }
     }
 
