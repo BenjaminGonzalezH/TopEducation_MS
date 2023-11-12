@@ -72,3 +72,5 @@ kubectl get secrets
 kubectl get all
 
 kubectl logs <Name pods> -f
+
+kubectl exec -it <Name pods postgres> bash -- psql -h postgres -U postgres
