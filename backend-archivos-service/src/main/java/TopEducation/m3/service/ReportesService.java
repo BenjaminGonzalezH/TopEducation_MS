@@ -53,7 +53,7 @@ public class ReportesService {
         /*Se buscan a todos los estudiantes*/
         ParameterizedTypeReference<ArrayList<EstudiantesModel>> responseType = new ParameterizedTypeReference<ArrayList<EstudiantesModel>>() {};
         ResponseEntity<ArrayList<EstudiantesModel>> responseEntity = restTemplate.exchange(
-                "http://localhost:8080/student",
+                "\"http://backend-gateway-service:8080/student",
                 HttpMethod.GET,
                 null,
                 responseType);
@@ -75,7 +75,7 @@ public class ReportesService {
                 ParameterizedTypeReference<ArrayList<CuotasModel>> responseType1 = new ParameterizedTypeReference<ArrayList<CuotasModel>>() {
                 };
                 ResponseEntity<ArrayList<CuotasModel>> responseEntity1 = restTemplate.exchange(
-                        "http://localhost:8080/Cuotas/" +
+                        "http://backend-gateway-service:8080/Cuotas/" +
                                 RutEstudiante,
                         HttpMethod.GET,
                         null,
@@ -137,7 +137,7 @@ public class ReportesService {
                     headers.setContentType(MediaType.APPLICATION_JSON);
                     HttpEntity<ArrayList<CuotasModel>> request = new HttpEntity<>(AuxCuotasEstudiantes, headers);
                     restTemplate.exchange(
-                            "http://localhost:8080/Cuotas/Actualizar",
+                            "http://backend-gateway-service:8080/Cuotas/Actualizar",
                             HttpMethod.PUT,
                             request,
                             void.class
@@ -205,7 +205,7 @@ public class ReportesService {
         /*Se buscan a todos los estudiantes*/
         ParameterizedTypeReference<ArrayList<EstudiantesModel>> responseType = new ParameterizedTypeReference<ArrayList<EstudiantesModel>>() {};
         ResponseEntity<ArrayList<EstudiantesModel>> responseEntity = restTemplate.exchange(
-                "http://localhost:8080/student",
+                "http://backend-gateway-service:8080/student",
                 HttpMethod.GET,
                 null,
                 responseType);
@@ -230,7 +230,7 @@ public class ReportesService {
                 ParameterizedTypeReference<ArrayList<CuotasModel>> responseType1 = new ParameterizedTypeReference<ArrayList<CuotasModel>>() {
                 };
                 ResponseEntity<ArrayList<CuotasModel>> responseEntity1 = restTemplate.exchange(
-                        "http://localhost:8080/Cuotas/" +
+                        "http://backend-gateway-service:8080/Cuotas/" +
                                 RutEstudiante,
                         HttpMethod.GET,
                         null,

@@ -10,6 +10,10 @@ import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -156,23 +160,25 @@ public class PruebaService {
     public void GuardarPruebaEnBD(String Rut_Estudiante, String Puntaje, String Fecha_Realizacion) {
         /* Entidad a Guardar */
         PruebaEntity Prueba = new PruebaEntity();
-        EstudiantesModel Estudiante;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         try {
-            /* Se busca el estudiante */
-            Estudiante = restTemplate.getForObject("http://localhost:8080/student/ByRut/" + Rut_Estudiante,
-                    EstudiantesModel.class);
+            ResponseEntity<EstudiantesModel> responseEntity = restTemplate.exchange(
+                    "http://backend-gateway-service:8080/student/ByRut/" + Rut_Estudiante,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<EstudiantesModel>(){}
+            );
 
             /* Caso en que el estudiante no existe */
-            if (Estudiante == null) {
+            if (responseEntity.getStatusCode() != HttpStatus.OK || responseEntity.getBody() == null) {
                 // Maneja el caso en que el estudiante no existe, por ejemplo, lanzando una excepción o registrando un error.
                 // Puedes agregar tu lógica de manejo de errores aquí.
                 return;
             }
 
             /* Inicialización */
-            Prueba.setId_estudiante(Estudiante.getId_estudiante());
+            Prueba.setId_estudiante(responseEntity.getBody().getId_estudiante());
 
             /* Caso en que no haya registro de puntaje o puntaje fuera de rango */
             if (Puntaje == null || Puntaje.isEmpty() || Integer.parseInt(Puntaje) < 150 || Integer.parseInt(Puntaje) > 1000) {
@@ -195,11 +201,15 @@ public class PruebaService {
 
     public ArrayList<PruebaEntity> ObtenerPruebasPorRutEstudiante(String Rut) {
         /*Busqueda de ID de estudiante*/
-        EstudiantesModel estudiante = restTemplate.getForObject("http://localhost:8080/student/ByRut/" + Rut,
-                EstudiantesModel.class);
+        ResponseEntity<EstudiantesModel> responseEntity = restTemplate.exchange(
+                "http://backend-gateway-service:8080/student/ByRut/" + Rut,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<EstudiantesModel>(){}
+        );
 
         /*Se verifica que el estudiante exista*/
-        if(estudiante == null){
+        if(responseEntity.getStatusCode() != HttpStatus.OK || responseEntity.getBody() == null){
             /*Se crea estructura con 1 elemento*/
             ArrayList<PruebaEntity> listafinal = new ArrayList<PruebaEntity>();
             PruebaEntity Prueba = new PruebaEntity();
@@ -210,7 +220,7 @@ public class PruebaService {
         }
         else {
             /*Busqueda de conjunto de pruebas por por id estudiante*/
-            return pruebaRepository.findAllByEstudianteId(estudiante.getId_estudiante());
+            return pruebaRepository.findAllByEstudianteId(responseEntity.getBody().getId_estudiante());
         }
     }
 
