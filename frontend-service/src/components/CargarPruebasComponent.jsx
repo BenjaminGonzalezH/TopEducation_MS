@@ -32,7 +32,7 @@ function CargarPruebasComponent() {
         .then(response => {
           setMessage("Archivo cargado exitosamente");
           console.log('Archivo cargado exitosamente', response);
-          ArchivosService.ObtenerPruebas()
+          ArchivosService.VerPruebas()
             .then(response => {
               setPruebas(response.data);
             })
