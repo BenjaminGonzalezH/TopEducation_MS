@@ -5,6 +5,7 @@ import TopEducation.m2.model.EstudiantesModel;
 import TopEducation.m2.repository.CuotaRepository;
 import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +26,10 @@ public class CuotaService {
     public ArrayList<CuotaEntity> ObtenerCuotasPorRutEstudiante(String Rut) {
         /* Búsqueda de ID de estudiante */
         ResponseEntity<EstudiantesModel> responseEntity = restTemplate.exchange(
-                "http://backend-estudiantes-service/student/ByRut/" + Rut,
+                "http://backend-gateway-service:8080/student/ByRut/" + Rut,
                 HttpMethod.GET,
                 null,
-                EstudiantesModel.class
+                new ParameterizedTypeReference<EstudiantesModel>(){}
         );
 
         /* Se verifica que el estudiante exista */
